@@ -1,0 +1,28 @@
+require('should');
+module.exports = function(callback, context){
+	var parse = require('csv-parse');
+	var fs = require("fs");
+	var input = './cards/all-open-tickets-view-2015-12-01-1645.csv';
+	var testLine = '';
+
+	console.log("test");
+
+	testLine = fs.readFileSync(input);
+
+	//.forEach(function (line) {
+
+		parse(testLine, {comment: '#'}, function(err, output){
+
+			callback.call(context, output);
+
+
+		});
+
+
+	//});
+
+}
+
+
+
+
