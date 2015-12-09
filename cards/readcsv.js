@@ -2,7 +2,7 @@ require('should');
 module.exports = function(callback, context){
 	var parse = require('csv-parse');
 	var fs = require("fs");
-	var input = './cards/all-open-tickets-view-2015-12-01-1645.csv';
+	var input = '../TrelloUpdater/cards/OpenTickets.csv';
 	var testLine = '';
 
 	console.log("test");
