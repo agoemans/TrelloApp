@@ -4,3 +4,9 @@ config.json
 *.csv
 
 node_modules/
+
+postcards.js
+updatecards.js
+testcsv.js
+
+.idea/
