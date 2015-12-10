@@ -7,6 +7,12 @@ var cardreader = new cardReader();
 
 //cardreader.loopThruFile();
 
-auth();
+//auth();
+
+
+cardreader.loopThruCards();
+
+//cardreader.addTicketNr([{"name":1},{"name":2}]);
+//cardreader.getBoardInfo();
 
 console.log("App js finished");

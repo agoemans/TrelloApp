@@ -9,6 +9,7 @@ function Addcards(){
 	this.boardID =  options.storageConfig.boardID;
 	this.backlogID = options.storageConfig.backlogID ;
 	this.InProgresID = options.storageConfig.InProgresID;
+	this.existingTickets = [];
 
 }
 
@@ -51,9 +52,42 @@ Addcards.prototype.loopThruFile = function(){
 		}
 	}, this);
 //	console.log("printing temparray");
+}
 
+
+Addcards.prototype.loopThruCards = function(){
+	// delete later --- only for testing
+	this.getCards(this.addTicketNr, this);
 
 
 }
+
+Addcards.prototype.getCards = function(callback, context){
+	// delete later --- only for testing	
+	var test = "/1/boards/" + this.boardID + "/cards?fields=name,idList,url&key=" + options.storageConfig.apiKey + "&token=" + options.storageConfig.token;
+	this.newTrello.get("/1/boards/" + this.boardID + "/cards", function(err, data) {
+		if (err) throw err;
+		
+			//console.log(data);
+			
+			callback.call(data, this);
+
+
+			//console.log(test);
+			//console.log(data[0]);
+	});
+}
+	
+
+Addcards.prototype.addTicketNr = function(list){
+	// delete later --- only for testing	
+	console.log("This is addTicketNr");
+	console.log(list)
+	for (var i = 0; i < list.length; i++){
+		console.log(list[i].name);
+	}
+}
+	
+
 
 module.exports = Addcards;
