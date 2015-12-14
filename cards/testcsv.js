@@ -2,7 +2,7 @@ require('should');
 
 var parse = require('csv-parse');
 var fs = require("fs");
-var input = 'all-open-tickets-view-2015-12-01-1645.csv';
+var input = 'OpenTickets.csv';
 var testLine = '';
 
 console.log("test");

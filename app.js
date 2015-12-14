@@ -10,9 +10,11 @@ var cardreader = new cardReader();
 //auth();
 
 
-cardreader.loopThruCards();
+//cardreader.loopThruCards();
 
 //cardreader.addTicketNr([{"name":1},{"name":2}]);
 //cardreader.getBoardInfo();
+
+cardreader.mainCardFunction();
 
 console.log("App js finished");
