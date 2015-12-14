@@ -6,20 +6,16 @@ var readCSV = require('../cards/readcsv.js');
 function Addcards(){
 	this.updater = new Updatecards();
 	this.newTrello = new Trello(options.storageConfig.apiKey, options.storageConfig.token);
-	this.boardID = '565c9a04a8aa4e237391ec5c';
-	this.backlogID = '565c9a0a365d03281f25dcac' ;
-	this.InProgresID = '565c9a1e02c7e29a9bed63ef';
-	this.todoID = '565c9a210f99df919b0b55a0';
-	this.doneID = '565c9a24b0170a277ccbcf4d';
-	this.idDictionary = {"Backlog":'565c9a0a365d03281f25dcac', 	"In-Progres": '565c9a1e02c7e29a9bed63ef',
-		"ToDo" :'565c9a210f99df919b0b55a0', "Done" : '565c9a24b0170a277ccbcf4d'};
-	//this.readcsv = new readCSV();
+	this.boardID =  options.storageConfig.boardID;
+	this.backlogID = options.storageConfig.backlogID ;
+	this.InProgresID = options.storageConfig.InProgresID;
+	this.existingTickets = [];
 
 }
 
 Addcards.prototype.getBoardInfo = function(){
-	//board id 565c9a04a8aa4e237391ec5c'
-	this.newTrello.get("/1/boards/565c9a04a8aa4e237391ec5c/lists", function(err, data) {
+	
+	this.newTrello.get("/1/boards/" + this.boardID + "/lists", function(err, data) {
 		if (err) throw err;
 			console.log(data);
 			console.log(data[0]);
@@ -47,18 +43,51 @@ Addcards.prototype.loopThruFile = function(){
 	//	console.log(output);
 		for (var i = 0; i < output.length; i++) {
 			if (output[i][1] == 'On-hold') {
-				this.addMethod(this.cardFilter(output[i][0]+output[i][3], '565c9a0a365d03281f25dcac'));
+				this.addMethod(this.cardFilter(output[i][0] + " " + output[i][3] + " " + output[i][6], this.backlogID));
 			}
 
 			if (output[i][1] == 'Open') {
-				this.addMethod(this.cardFilter(output[i][0]+output[i][3], '565c9a210f99df919b0b55a0'));
+				this.addMethod(this.cardFilter(output[i][0] + " " + output[i][3] + " " + output[i][6], this.InProgresID));
 			}
 		}
 	}, this);
 //	console.log("printing temparray");
+}
 
+
+Addcards.prototype.loopThruCards = function(){
+	// delete later --- only for testing
+	this.getCards(this.addTicketNr, this);
 
 
 }
+
+Addcards.prototype.getCards = function(callback, context){
+	// delete later --- only for testing	
+	var test = "/1/boards/" + this.boardID + "/cards?fields=name,idList,url&key=" + options.storageConfig.apiKey + "&token=" + options.storageConfig.token;
+	this.newTrello.get("/1/boards/" + this.boardID + "/cards", function(err, data) {
+		if (err) throw err;
+		
+			//console.log(data);
+			
+			callback.call(data, this);
+
+
+			//console.log(test);
+			//console.log(data[0]);
+	});
+}
+	
+
+Addcards.prototype.addTicketNr = function(list){
+	// delete later --- only for testing	
+	console.log("This is addTicketNr");
+	console.log(list)
+	for (var i = 0; i < list.length; i++){
+		console.log(list[i].name);
+	}
+}
+	
+
 
 module.exports = Addcards;
